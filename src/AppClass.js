@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './App.css';
 import NavbarClass from './components/layouts/NavbarClass';
 import UsersClass from './components/users/UsersClass';
@@ -6,7 +6,9 @@ import NavbarFunctional from './components/layouts/NavbarFunctional';
 import UsersFunctional from './components/users/UsersFunctional';
 import SearchClass from './components/users/SearchClass';
 import AlertFunctional from './components/layouts/AlertFunctional';
+import AboutFunctional from './components/pages/AboutFunctional';
 import axios from 'axios';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 
 const github = axios.create({
@@ -65,41 +67,70 @@ class App extends React.Component {
     const test = 'Not the Github you are looking for';
     if (useClass) {
       return (
-        <div className="App">
-          <NavbarClass title="Github Explorer" test={test} />
-          <div className="container">
-            <AlertFunctional alert={this.state.alert} />
-            <SearchClass
-              searchUsers={this.searchUsers}
-              clearUsers={this.clearUsers}
-              showClear={this.state.users.length > 0 ? true : false}
-              setAlert={this.setAlert}
-            />
-            <UsersClass loading={this.state.loading} users={this.state.users} />
+        <Router>
+          <div className="App">
+            <NavbarClass title="Github Explorer" test={test} />
+            <div className="container">
+              <AlertFunctional alert={this.state.alert} />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <Fragment>
+                      <SearchClass
+                        searchUsers={this.searchUsers}
+                        clearUsers={this.clearUsers}
+                        showClear={this.state.users.length > 0 ? true : false}
+                        setAlert={this.setAlert}
+                      />
+                      <UsersClass
+                        loading={this.state.loading}
+                        users={this.state.users}
+                      />
+                    </Fragment>
+                  )}
+                />
+                <Route exact path="/about" component={AboutFunctional} />
+              </Switch>
+            </div>
           </div>
-        </div>
+        </Router>
       );
     } else {
       return (
-        <div className="App">
-          <NavbarFunctional title="Github Explorer" test={test} />
-          <p>
-            <small>Hello from functional</small>
-          </p>
-          <div className="container">
-            <AlertFunctional alert={this.state.alert} />
-            <SearchClass
-              searchUsers={this.searchUsers}
-              clearUsers={this.clearUsers}
-              showClear={this.state.users.length > 0 ? true : false}
-              setAlert={this.setAlert}
-            />
-            <UsersFunctional
-              loading={this.state.loading}
-              users={this.state.users}
-            />
+        <Router>
+          <div className="App">
+            <NavbarFunctional title="Github Explorer" test={test} />
+            <p>
+              <small>Hello from functional</small>
+            </p>
+            <div className="container">
+              <AlertFunctional alert={this.state.alert} />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <Fragment>
+                      <SearchClass
+                        searchUsers={this.searchUsers}
+                        clearUsers={this.clearUsers}
+                        showClear={this.state.users.length > 0 ? true : false}
+                        setAlert={this.setAlert}
+                      />
+                      <UsersFunctional
+                        loading={this.state.loading}
+                        users={this.state.users}
+                      />
+                    </Fragment>
+                  )}
+                />
+                <Route exact path="/about" component={AboutFunctional} />
+              </Switch>
+            </div>
           </div>
-        </div>
+        </Router>
       );
     }
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function NavbarFunctional(props) {
   return (
@@ -8,7 +9,14 @@ function NavbarFunctional(props) {
         <i className={props.icon}></i>
         {props.title}
       </h1>
-      <p>{props.test}</p>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
     </nav>
   );
 }
