@@ -26,6 +26,7 @@ class App extends React.Component {
   state = {
     user: {},
     users: [],
+    repos: [],
     loading: false,
     alert: null,
   };
@@ -57,6 +58,15 @@ class App extends React.Component {
     this.setState({ loading: true });
     const res = await github.get(`/users/${username}`);
     this.setState({ loading: false, user: res.data });
+  };
+
+  // Get user repositories
+  getUserRepos = async (username) => {
+    this.setState({ loading: true });
+    const res = await github.get(
+      `/users/${username}/repos?per_page=5&sort=created:asc`
+    );
+    this.setState({ loading: false, repos: res.data });
   };
 
   // Clear users from state
@@ -108,6 +118,7 @@ class App extends React.Component {
                     <UserClass
                       {...props}
                       getUser={this.getUser}
+                      getUserRepos={this.getUserRepos}
                       user={this.state.user}
                       loading={this.state.loading}
                     />
@@ -155,7 +166,9 @@ class App extends React.Component {
                     <UserClass
                       {...props}
                       getUser={this.getUser}
+                      getUserRepos={this.getUserRepos}
                       user={this.state.user}
+                      repos={this.state.repos}
                       loading={this.state.loading}
                     />
                   )}
