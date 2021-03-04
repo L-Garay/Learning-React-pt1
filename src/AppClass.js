@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import './App.css';
 import NavbarClass from './components/layouts/NavbarClass';
 import UsersClass from './components/users/UsersClass';
+import UserClass from './components/users/UserClass';
 import NavbarFunctional from './components/layouts/NavbarFunctional';
 import UsersFunctional from './components/users/UsersFunctional';
 import SearchClass from './components/users/SearchClass';
@@ -23,6 +24,7 @@ const github = axios.create({
 // There are multiple lifecycle hooks, but 'render()' is required and is used to render the DOM when the component is created
 class App extends React.Component {
   state = {
+    user: {},
     users: [],
     loading: false,
     alert: null,
@@ -48,6 +50,13 @@ class App extends React.Component {
     this.setState({ loading: true });
     const res = await github.get(`/search/users?q=${searchText}`);
     this.setState({ loading: false, users: res.data.items });
+  };
+
+  // Get single user
+  getUser = async (username) => {
+    this.setState({ loading: true });
+    const res = await github.get(`/users/${username}`);
+    this.setState({ loading: false, user: res.data });
   };
 
   // Clear users from state
@@ -92,6 +101,18 @@ class App extends React.Component {
                   )}
                 />
                 <Route exact path="/about" component={AboutFunctional} />
+                <Route
+                  exact
+                  path="/user/:login"
+                  render={(props) => (
+                    <UserClass
+                      {...props}
+                      getUser={this.getUser}
+                      user={this.state.user}
+                      loading={this.state.loading}
+                    />
+                  )}
+                />
               </Switch>
             </div>
           </div>
@@ -127,6 +148,18 @@ class App extends React.Component {
                   )}
                 />
                 <Route exact path="/about" component={AboutFunctional} />
+                <Route
+                  exact
+                  path="/user/:login"
+                  render={(props) => (
+                    <UserClass
+                      {...props}
+                      getUser={this.getUser}
+                      user={this.state.user}
+                      loading={this.state.loading}
+                    />
+                  )}
+                />
               </Switch>
             </div>
           </div>
