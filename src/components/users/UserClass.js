@@ -15,7 +15,7 @@ export class UserClass extends Component {
     user: PropTypes.object.isRequired,
     getUser: PropTypes.func.isRequired,
     getUserRepos: PropTypes.func.isRequired,
-    repos: PropTypes.array.isRequired,
+    repos: PropTypes.array,
   };
   render() {
     const {
