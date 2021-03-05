@@ -6,6 +6,7 @@ import UserClass from './components/users/UserClass';
 import NavbarFunctional from './components/layouts/NavbarFunctional';
 import UsersFunctional from './components/users/UsersFunctional';
 import SearchClass from './components/users/SearchClass';
+import SearchFunctional from './components/users/SearchFunctional';
 import AlertFunctional from './components/layouts/AlertFunctional';
 import AboutFunctional from './components/pages/AboutFunctional';
 import axios from 'axios';
@@ -145,7 +146,14 @@ class App extends React.Component {
                   path="/"
                   render={(props) => (
                     <Fragment>
-                      <SearchClass
+                      {/* <SearchClass
+                        searchUsers={this.searchUsers}
+                        clearUsers={this.clearUsers}
+                        showClear={this.state.users.length > 0 ? true : false}
+                        setAlert={this.setAlert}
+                      /> */}
+                      <SearchFunctional
+                        {...props}
                         searchUsers={this.searchUsers}
                         clearUsers={this.clearUsers}
                         showClear={this.state.users.length > 0 ? true : false}
