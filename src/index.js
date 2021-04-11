@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppClass from './AppClass';
+// import AppClass from './AppClass';
+import AppFunctional from './AppFunctional';
 import reportWebVitals from './reportWebVitals';
 
 // Takes in two arguments, the element you want to render and where you want to render it.
 ReactDOM.render(
   <React.StrictMode>
-    <AppClass />
+    {/* <AppClass /> */}
+    <AppFunctional />
   </React.StrictMode>,
   document.getElementById('root')
 );
