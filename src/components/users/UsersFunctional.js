@@ -1,25 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UserItemFunctional from './UserItemFunctional';
 import Spinner from '../layouts/Spinner';
-import PropTypes from 'prop-types';
+import GithubContext from '../../context/github/githubContext';
 
-function UsersFunctional(props) {
-  if (props.loading) {
+function UsersFunctional() {
+  const githubContext = useContext(GithubContext);
+
+  if (githubContext.loading) {
     return <Spinner />;
   } else {
     return (
       <div style={userStyle}>
-        {props.users.map((u) => (
+        {githubContext.users.map((u) => (
           <UserItemFunctional key={u.id} user={u} />
         ))}
       </div>
     );
   }
 }
-UsersFunctional.propTypes = {
-  users: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
-};
 const userStyle = {
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
