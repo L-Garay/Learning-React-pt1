@@ -8,6 +8,7 @@ import {
   CLEAR_USERS,
   GET_USER,
   GET_REPOS,
+  GET_RANDOM,
 } from '../types';
 
 const github = axios.create({
@@ -27,6 +28,11 @@ const GithubState = (props) => {
   };
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
+
+  // Set Loading
+  const setLoading = () => {
+    dispatch({ type: SET_LOADING });
+  };
 
   // Search Users
   // Use search input to search for users
@@ -56,9 +62,13 @@ const GithubState = (props) => {
   const clearUsers = () => {
     dispatch({ type: CLEAR_USERS });
   };
-  // Set Loading
-  const setLoading = () => {
-    dispatch({ type: SET_LOADING });
+  // Get random 30 users
+  const getRandom = async () => {
+    setLoading();
+    const res = await github.get(
+      `/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+    dispatch({ type: GET_RANDOM, payload: res.data });
   };
 
   return (
@@ -72,6 +82,7 @@ const GithubState = (props) => {
         clearUsers,
         getUser,
         getUserRepos,
+        getRandom,
       }}
     ></GithubContext.Provider>
   );

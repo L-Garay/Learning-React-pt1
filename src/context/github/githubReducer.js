@@ -4,6 +4,7 @@ import {
   CLEAR_USERS,
   GET_USER,
   GET_REPOS,
+  GET_RANDOM,
 } from '../types';
 
 const reducer = (state, action) => {
@@ -35,6 +36,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         repos: action.payload,
+        loading: false,
+      };
+    case GET_RANDOM:
+      return {
+        ...state,
+        users: action.payload,
         loading: false,
       };
     default:
